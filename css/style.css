@@ -1,0 +1,47 @@
+body {
+  margin: 0;
+  background-color: rgb(206, 243, 252);
+}
+
+#start-btn {
+  background-color: rgb(105, 5, 27);
+  color: white;
+  padding: 20px;
+  font-size: 20px;
+  margin-top: 40px;
+  border-radius: 10px; 
+}
+
+#start-screen h1 {
+  font-size: 50px;
+  color: rgb(105, 5, 27);
+  margin: 0;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 50px;
+}
+
+#game-box {
+  background-image: url("../img/sea-bg.jpg");
+  background-size: cover; 
+  width:600px;
+  height:400px;
+  border-radius: 20px;
+  position: relative; 
+  overflow: hidden; 
+  user-select: none; 
+}
+
+#game-box * {
+  pointer-events: none; 
+}
+
+#game-over-screen,#game-screen,#score-result-screen
+ {
+  display: none;
+}
