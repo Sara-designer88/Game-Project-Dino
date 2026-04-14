@@ -7,11 +7,11 @@ constructor (){
   gameBoxNode.append(this.dinoNode)
 
 
-  this.x = 50
-  this.y = 170
+  this.x = 100
+  this.y = 200
   this.width = 120
   this.height = 150
-  this.moveSpeed = 2
+  this.moveSpeed = 5
 
   this.dinoNode.style.width =`${this.width}px`
   this.dinoNode.style.height =`${this.height}px`
@@ -20,15 +20,15 @@ constructor (){
   this.dinoNode.style.position = "absolute"
 }
 
-move(){
-    if (this.y >= 0){
-     this.y -= this.moveSpeed;
-    this.node.style.top = `${this.y}px`
-    }
-    if (this.x <=0){
-        this.x += this.moveSpeed
-        this.dinoNode.style.left = `${this.x}px`
-    }
+move(keys) {
+  if (keys.left) this.x -= this.moveSpeed;
+  if (keys.right) this.x += this.moveSpeed;
+  if (keys.up) this.y -= this.moveSpeed;
+  if (keys.down) this.y += this.moveSpeed;
+
+  this.dinoNode.style.left = `${this.x}px`;
+  this.dinoNode.style.top = `${this.y}px`;
 }
+
 
 }

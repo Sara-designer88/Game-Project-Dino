@@ -16,6 +16,7 @@ let goodTargetArr = [];
 let badTargetArr = [];
 let gameIntervalId = null;
 let goodTargetspawnIntervalId = null;
+let keys= {};
 
 //Functions
 
@@ -29,20 +30,83 @@ function gameStart() {
 
   //create obj from the class dino
   dinoObj = new dino();
-  // new goodTarget (); we will not create the object bcz we want to add it to the spawn 
-  // intialize the other interval 
+  // Note : new goodTarget (); we will not create the object bcz we want to add it to the spawn 
+  
+  // intialize the other interval for the good target
   goodTargetspawnIntervalId = setInterval(spawnGoodTarget,2000)
 }
 
 function gameLoop() {
+ 
+  // this will move the dino smoothly after creating the object and call the move function
+  dinoObj.move({ 
+      left: keys["ArrowLeft"],
+    right: keys["ArrowRight"],
+    up: keys["ArrowUp"],
+    down: keys["ArrowDown"]
+  });
+
+ // loop inside the good target array to move it 
+  goodTargetArr.forEach((newgoodTargetObj)=> {
+  newgoodTargetObj.automaticMovement();
+ })
+
+ eatGoodTarget()
+
+
 
 }
 
 function spawnGoodTarget (){
+  let yPosition = Math.floor(Math.random()* (gameBoxNode.offsetHeight - 100))
+  let newGoodTarget = new goodTarget (yPosition)
+  goodTargetArr.push(newGoodTarget)
 
 }
+
+
+function eatGoodTarget (){
+  goodTargetArr.forEach((goodTargetObj,index)=> {
+    let isColliding = collectionCheck(dinoObj,goodTargetObj)
+        if (isColliding === true){ // if good target touch the dino , will be destroyed
+      goodTargetObj.goodTargetNode.remove();
+      goodTargetArr.splice(index,1)
+      //console.log("item exist dino ")
+     
+      // maximize score by 1 
+    }
+    else if(goodTargetObj.x + goodTargetObj.width <= 0){ // if good target touch the screen , will be destroyed 
+      goodTargetObj.goodTargetNode.remove();
+      goodTargetArr.splice(index,1)
+      //console.log("item exist screen ")
+    }
+  })
+
+}
+
+function collectionCheck(elem1, elem2) {
+    // this will return boolean 
+    return (
+      elem1.x < elem2.x + elem2.width &&
+      elem1.x + elem1.width > elem2.x &&
+      elem1.y < elem2.y + elem2.height &&
+      elem1.y + elem1.height > elem2.y
+    );
+  }
+
+
+
 //Event listener
 startBtn.addEventListener("click", gameStart);
+
+document.addEventListener("keydown", (event) => {
+  keys[event.key] = true;
+});
+
+document.addEventListener("keyup", (event) => {
+  keys[event.key] = false;
+});
+
 
 // Planning
 
@@ -70,4 +134,16 @@ BONUS
 - Score
 - timer
 - sound
+*/
+
+/*
+jasminetest : 
+Describe (){
+
+
+}
+
+
+
+
 */
