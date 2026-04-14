@@ -25,7 +25,7 @@ body {
   padding-bottom: 70px;
 }
 
-#restart-btn , #restartGameBtnScore{
+#restart-btn , #restart-btn2{
   background-color: rgb(105, 5, 27);
   color: white;
   padding: 20px;
