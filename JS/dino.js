@@ -11,7 +11,7 @@ constructor (){
   this.y = 200
   this.width = 120
   this.height = 150
-  this.moveSpeed = 5
+  this.moveSpeed = 7
 
   this.dinoNode.style.width =`${this.width}px`
   this.dinoNode.style.height =`${this.height}px`

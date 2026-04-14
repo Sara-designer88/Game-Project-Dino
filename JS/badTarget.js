@@ -1,16 +1,16 @@
 class badTarget {
 
-constructor (){
-    this.badTargetNode = document.createElement("img")
+constructor (yPosition){
+   this.badTargetNode = document.createElement("img")
   this.badTargetNode.src = "./img/enemy.png"
   gameBoxNode.append(this.badTargetNode)
 
 
-  this.x = 550
-  this.y = randomPosition
+  this.x = gameBoxNode.offsetWidth;
+  this.y = yPosition
   this.width = 30
   this.height = 50
-  this.moveSpeed = 2
+  this.moveSpeed = 5
 
   this.badTargetNode.style.width =`${this.width}px`
   this.badTargetNode.style.height =`${this.height}px`
@@ -18,11 +18,9 @@ constructor (){
   this.badTargetNode.style.left =`${this.x}px`
   this.badTargetNode.style.position = "absolute"
 }
-
 automaticMovement(){
     this.x -= this.moveSpeed;
     this.badTargetNode.style.left = `${this.x}px`
 }
-
-
 }
+
