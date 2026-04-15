@@ -1,0 +1,18 @@
+/*soundBtn.addEventListener("click", () => {
+  console.log("clicked", audio.paused);
+  if (audio.paused) {
+    audio.muted = false;
+    audio2.muted = false;
+    audio3.muted = false;
+    soundIcon.src = "./img/unmuteSound.png";
+  } else {
+    audio.muted = true;
+    audio2.muted = true;
+    audio3.muted = true;
+    soundIcon.src = "./img/muteSound.png";
+  }
+});
+
+the above code works well with mute the sound but when i click again , it doesn't unmute ! tell me what is the problem ? in simple JS
+
+*/
