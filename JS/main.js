@@ -80,6 +80,9 @@ audio.play();
     down: keys["ArrowDown"],
   });
 
+  // check if dino go outside screens and prevent that 
+  preventDinoOutScreen();
+  
   // loop inside the good target array to move it
   goodTargetArr.forEach((newgoodTargetObj) => {
     newgoodTargetObj.automaticMovement();
@@ -259,6 +262,22 @@ function destroyAlltargets(){
   );
 
 }
+
+function preventDinoOutScreen(){
+  if(dinoObj.x < 0){
+    dinoObj.x = 0;
+  }
+  if(dinoObj.x + dinoObj.width > gameBoxNode.offsetWidth){
+    dinoObj.x = gameBoxNode.offsetWidth - dinoObj.width;
+  } 
+  if(dinoObj.y < 0){
+    dinoObj.y = 0;
+  }
+  if(dinoObj.y + dinoObj.height > gameBoxNode.offsetHeight){
+    dinoObj.y = gameBoxNode.offsetHeight - dinoObj.height;
+  }
+}
+
 //Event listener
 startBtn.addEventListener("click", gameStart);
 restartGameBtn.addEventListener("click", restartGame);
@@ -273,8 +292,8 @@ document.addEventListener("keyup", (event) => {
 });
 
 soundBtn.addEventListener("click", () => {
-  console.log("clicked", audio.paused);
-  if (audio.paused) {
+  console.log("clicked", audio.muted);
+  if (audio.muted) {
     audio.muted = false;
     audio2.muted = false;
     audio3.muted = false;
@@ -327,9 +346,10 @@ BONUS
 - Score // get score from eating the good target [ Done]
 - timer // get score result screen  [ Done]
 - sound [ done]
-- adding shooting target
-- adding 3 lives for 3 trial eating enemy target then game over
-- adding live target to make it +1
+- adding shooting target // later
+- adding 3 lives for 3 trial eating enemy target then game over // later
+  ---adding live target to make it +1
+- enhance in css and design //!todo
 
 
 
@@ -337,7 +357,7 @@ BONUS
 
 ISSUES to be fixed
 - 2 targets overlap each other //!todo
-- after creating collision check of dino and screen edge , 
+- after creating collision check of dino and screen edge , //!todo
 the space between targets should be the same as the dino height to not have 2 target at sme time at screen edge 
 */
 

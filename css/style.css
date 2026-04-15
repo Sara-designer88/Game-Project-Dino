@@ -12,6 +12,14 @@ body {
   border-radius: 10px; 
 }
 
+#start-screen{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+
 #start-screen h1 {
   font-size: 50px;
   color: rgb(105, 5, 27);
@@ -56,7 +64,33 @@ body {
   pointer-events: none; 
 }
 
+#header{
+  display: flex;
+  font-size: 20px;
+  color: rgb(105, 5, 27);
+  font-weight: bold;
+  flex-direction: row;
+justify-content: space-between;
+  align-items: center;
+  margin: 10px;
+  width: 100%;
+}
+ 
+#timer {
+  margin: 0 auto;
+}
+
+#score {
+  margin-right: auto;
+}
+
+#sound-btn {
+  margin-left: auto;
+}
+
 #game-over-screen,#game-screen,#score-result-screen
  {
   display: none;
 }
+
+
