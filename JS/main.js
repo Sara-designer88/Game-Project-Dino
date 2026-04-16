@@ -23,6 +23,10 @@ audio2.volume = 0.5;
 const audio3 = document.createElement("audio");
 audio3.src = "./img/badTargetSound.mp3";
 audio3.volume = 0.5;
+const audio4 = document.createElement("audio");
+audio4.src = "./img/bonusTargetSound.mp3";
+audio4.volume = 0.5;
+
 
 //buttons
 const startBtn = document.querySelector("#start-btn");
@@ -35,11 +39,13 @@ let dinoObj = null;
 let goodTargetArr = [];
 let badTargetArr = [];
 let shootTargetArr = [];
+let bonusTargetArr = [];
 let timerIntervalId = null;
 let gameIntervalId = null;
 let goodTargetspawnIntervalId = null;
 let badTargetspawnIntervalId = null;
 let shootTargetspawnIntervalId = null;
+let bonusTargetspawnIntervalId = null;
 let keys = {};
 let score = 0;
 let timer = 30;
@@ -65,8 +71,9 @@ function gameStart() {
 
   // intialize the other interval for the good target
   goodTargetspawnIntervalId = setInterval(spawnGoodTarget, 2000);
-  badTargetspawnIntervalId = setInterval(spawnBadTarget, 3000);
-  shootTargetspawnIntervalId = setInterval(spawnShootTarget, 2000);
+  badTargetspawnIntervalId = setInterval(spawnBadTarget, 6000);
+  shootTargetspawnIntervalId = setInterval(spawnShootTarget, 10000);
+  bonusTargetspawnIntervalId = setInterval(spawnBonusTarget, 8000);
 
   
 }
@@ -108,6 +115,13 @@ audio.play();
 
   eatShootTarget();
 
+  // loop inside the bonus target array to show it
+  bonusTargetArr.forEach((newbonusTargetObj) => {
+    newbonusTargetObj.bonusTargetShow();
+  });
+
+  eatBonusTarget();
+
 }
 
 // This function will spawn a new good target with a random y position and add it to the array
@@ -130,6 +144,17 @@ function spawnShootTarget() {
   let newShootTarget = new shootTarget(xPosition);
   shootTargetArr.push(newShootTarget);
 }
+
+function spawnBonusTarget() {
+  let xPosition = Math.floor(Math.random() * (gameBoxNode.offsetWidth - 100));
+  let yPosition = Math.floor(Math.random() * (gameBoxNode.offsetHeight - 100));
+  let newBonusTarget = new bonusTarget(xPosition,yPosition);
+  bonusTargetArr.push(newBonusTarget);
+  newBonusTarget.createdAt = Date.now();
+  newBonusTarget.lifeTime = 4000;
+  
+}
+
 
 function eatGoodTarget() {
   goodTargetArr.forEach((goodTargetObj, index) => {
@@ -195,12 +220,34 @@ function eatShootTarget() {
   });
 }
 
+function eatBonusTarget() {
+  bonusTargetArr.forEach((bonusTargetObj, index) => {
+    let isColliding = collectionCheck(dinoObj, bonusTargetObj);
+    if (isColliding === true) {
+      // if good target touch the dino , will be destroyed
+      bonusTargetObj.bonusTargetNode.remove();
+      bonusTargetArr.splice(index, 1);
+       audio4.play();
+      
+      // maximize score by 5
+      score += 5;
+      scoreBtn.textContent = `Score: ${score}`;
+    } // else if not colllide with dino Object after x time , it will be destroyed, and dissapeared 
+    else if (Date.now() - bonusTargetObj.createdAt > bonusTargetObj.lifeTime) {
+      bonusTargetObj.bonusTargetNode.remove();
+      bonusTargetArr.splice(index, 1);
+      bonusTargetHide();
+    }
+  });
+}
+
 function gameOver() {
   // stop all interval
   clearInterval(gameIntervalId);
   clearInterval(goodTargetspawnIntervalId);
   clearInterval(badTargetspawnIntervalId);
   clearInterval(shootTargetspawnIntervalId);
+  clearInterval(bonusTargetspawnIntervalId);
   // change state
   // retsart all game variables
   gameScreen.style.display = "none";
@@ -219,14 +266,6 @@ function restartGame() {
    dinoObj.dinoNode.remove();
    dinoObj = null;
   }
-  //  if(goodTargetObj){
-  //   goodTargetObj.goodTargetNode.remove();
-  //     goodTargetArr.splice(index, 1);
-  // }
-  // if(badTargetObj){
-  //   badTargetObj.badTargetNode.remove();
-  //   badTargetArr.splice(index, 1);
-  // }
 
   gameStart();
     
@@ -267,6 +306,7 @@ function scoreResult() {
   clearInterval(goodTargetspawnIntervalId);
   clearInterval(badTargetspawnIntervalId);
   clearInterval(shootTargetspawnIntervalId);
+  clearInterval(bonusTargetspawnIntervalId);
   destroyAlltargets()
   // change state
   // retsart all game variables
@@ -309,6 +349,11 @@ function destroyAlltargets(){
   shootTargetArr.forEach((shootTargetObj, index) => {
    shootTargetObj.shootTargetNode.remove();
   shootTargetArr.splice(index, 1);}
+  );
+
+   bonusTargetArr.forEach((bonusTargetObj, index) => {
+   bonusTargetObj.bonusTargetNode.remove();
+  bonusTargetArr.splice(index, 1);}
   );
 
 }
@@ -415,21 +460,28 @@ BONUS
 - Score // get score from eating the good target [ Done]
 - timer // get score result screen  [ Done]
 - sound [ done]
-- adding shooting target // later
-- adding 3 lives for 3 trial eating enemy target then game over // later
+- adding shooting target come from the top [done]
+- adding bonus target appear randommly in screen and dissapear after x time [done]
+- enhance in css and design [done]
+- adding instruction button [done]
+
+- adding 3 lives for 3 trial eating shooting target then game over // later
   ---adding live target to make it +1
   - adding live target to make it -1
-- enhance in css and design [done]
-- adding instruction [done]
 
+- enhance code structure with claude AI prompt //!todo
+- enhance design//!todo
+- enhance instruction popup //!todo
 
 
 
 
 ISSUES to be fixed
-- 2 targets overlap each other //!todo
-- after creating collision check of dino and screen edge , //!todo
+- 2 targets overlap each other 
+- after creating collision check of dino and screen edge , 
 the space between targets should be the same as the dino height to not have 2 target at sme time at screen edge 
 */
+
+//! the score screen appear after game over ?
 
 

@@ -73,7 +73,7 @@ border-style: none;
 #game-box {
   background-image: url("../img/beach-bg.jpg");
   background-size: cover; 
-  width:600px;
+  width:800px;
   height:500px;
   border-radius: 20px;
   position: relative; 
