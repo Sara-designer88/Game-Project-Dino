@@ -10,7 +10,7 @@ constructor (yPosition){
   this.y = yPosition
   this.width = 30
   this.height = 50
-  this.moveSpeed = 5
+  this.moveSpeed = 4
 
   this.goodTargetNode.style.width =`${this.width}px`
   this.goodTargetNode.style.height =`${this.height}px`

@@ -21,16 +21,16 @@ const bonus3 = document.querySelector("#bonus3");
 const audio = document.createElement("audio");
 audio.src = "./img/bgSound.mp3";
 audio.loop = true;
-audio.volume = 0.5;
+audio.volume = 0.1;
 const audio2 = document.createElement("audio");
 audio2.src = "./img/goodTargetSound.mp3";
-audio2.volume = 0.5;
+audio2.volume = 0.1;
 const audio3 = document.createElement("audio");
 audio3.src = "./img/badTargetSound.mp3";
-audio3.volume = 0.5;
+audio3.volume = 0.1;
 const audio4 = document.createElement("audio");
 audio4.src = "./img/bonusTargetSound.mp3";
-audio4.volume = 0.5;
+audio4.volume = 0.1;
 
 //buttons
 const startBtn = document.querySelector("#start-btn");
@@ -52,7 +52,7 @@ let shootTargetspawnIntervalId = null;
 let bonusTargetspawnIntervalId = null;
 let keys = {};
 let score = 0;
-let timer = 30;
+let timer = 60;
 let lives = 3;
 
 //Functions
@@ -67,6 +67,11 @@ function gameStart() {
   //starting the timer
   startTimer();
 
+  //reset lives
+  bonus1.style.display = "flex";
+  bonus2.style.display = "flex";
+  bonus3.style.display = "flex";
+
   //starting the main game interval
   gameIntervalId = setInterval(gameLoop, Math.floor(1000 / 60));
 
@@ -76,9 +81,9 @@ function gameStart() {
 
   // intialize the other interval for the good target
   goodTargetspawnIntervalId = setInterval(spawnGoodTarget, 2000);
-  badTargetspawnIntervalId = setInterval(spawnBadTarget, 6000);
+  badTargetspawnIntervalId = setInterval(spawnBadTarget, 15000);
   shootTargetspawnIntervalId = setInterval(spawnShootTarget, 5000);
-  bonusTargetspawnIntervalId = setInterval(spawnBonusTarget, 8000);
+  bonusTargetspawnIntervalId = setInterval(spawnBonusTarget, 10000);
 }
 
 function gameLoop() {
@@ -102,7 +107,7 @@ function gameLoop() {
   });
 
   eatGoodTarget();
-
+  
   // loop inside the bad target array to move it
   badTargetArr.forEach((newbadTargetObj) => {
     newbadTargetObj.automaticMovement();
@@ -132,7 +137,7 @@ function spawnGoodTarget() {
   goodTargetArr.push(newGoodTarget);
 }
 
-// This function will spawn a new good target with a random y position and add it to the array
+// This function will spawn a new bad target with a random y position and add it to the array
 function spawnBadTarget() {
   let yPosition = Math.floor(Math.random() * (gameBoxNode.offsetHeight - 200));
   let newBadTarget = new badTarget(yPosition);
@@ -146,6 +151,7 @@ function spawnShootTarget() {
   shootTargetArr.push(newShootTarget);
 }
 
+// This function will spawn a new bonus target with a random x & y position && appear on x time
 function spawnBonusTarget() {
   let xPosition = Math.floor(Math.random() * (gameBoxNode.offsetWidth - 100));
   let yPosition = Math.floor(Math.random() * (gameBoxNode.offsetHeight - 100));
@@ -155,6 +161,7 @@ function spawnBonusTarget() {
   newBonusTarget.lifeTime = 4000;
 }
 
+//function to check collision with good target 
 function eatGoodTarget() {
   goodTargetArr.forEach((goodTargetObj, index) => {
     let isColliding = collectionCheck(dinoObj, goodTargetObj);
@@ -201,7 +208,7 @@ function eatBadTarget() {
   });
 }
 
-//this function will eat the shoot target and destroy it and game over otherwize destroy it once it exist screen
+//this function will eat the shoot target then will change the lives then game over otherwize destroy it once it exist screen
 function eatShootTarget() {
   shootTargetArr.forEach((shootTargetObj, index) => {
     let isColliding = collectionCheck(dinoObj, shootTargetObj);
@@ -238,6 +245,7 @@ function eatShootTarget() {
   });
 }
 
+// function to check collision with bonus target and connect with lives
 function eatBonusTarget() {
   bonusTargetArr.forEach((bonusTargetObj, index) => {
     let isColliding = collectionCheck(dinoObj, bonusTargetObj);
@@ -313,7 +321,7 @@ function updateDisplay() {
 
 // This function will start the timer with setInterval and will call the updateDisplay function
 function startTimer() {
-  timer = 30;
+  timer = 60;
   clearInterval(timerIntervalId); // prevent multiple timers
 
   timerIntervalId = setInterval(() => {
@@ -441,8 +449,8 @@ document.addEventListener("keyup", (event) => {
   keys[event.key] = false;
 });
 
+
 soundBtn.addEventListener("click", () => {
-  console.log("clicked", audio.muted);
   if (audio.muted) {
     audio.muted = false;
     audio2.muted = false;
@@ -519,7 +527,7 @@ BONUS
   ---will decrease when he eat shotting target // after 3 empty lives , game over
 
 
-- enhance code structure with claude AI prompt //!todo
+- enhance code structure//!todo
 - enhance design to be responsive //!todo
 - change background and objects color //!todo
 - enhance instruction popup //!todo
