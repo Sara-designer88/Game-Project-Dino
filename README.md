@@ -31,7 +31,7 @@ Game-Project-Dino/
 
 🚀 Getting Started
 1. Clone the Repository
-   git clone https://github.com/your-username/Game-Project-Dino.git
+   git clone https://github.com/sara-faltas/Game-Project-Dino.git
 2. Open the Project
   Navigate to the project folder:
   cd Game-Project-Dino
